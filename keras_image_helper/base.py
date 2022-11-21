@@ -48,4 +48,8 @@ class BasePreprocessor:
         img = download_image(url)
         return self.convert_to_tensor(img)
     
+    def from_loaded_image(self, img):
+        # img = download_image(url)
+        return self.convert_to_tensor(img)
+    
 
