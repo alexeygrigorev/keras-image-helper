@@ -77,3 +77,37 @@ class InceptionPreprocessor(BasePreprocessor):
 
     def preprocess(self, x):
         return tf_preprocessing(x)
+
+
+class FunctionPreprocessor(BasePreprocessor):
+    """
+    A preprocessor that uses a custom function for preprocessing.
+    
+    This class allows you to pass any function that takes an array/tensor
+    and returns a processed array/tensor.
+    """
+    
+    def __init__(self, target_size, func):
+        """
+        Initialize the FunctionPreprocessor.
+        
+        Args:
+            target_size: Tuple of (width, height) for image resizing
+            func: Function to apply during preprocessing. Should take an array/tensor
+                  and return a processed array/tensor
+        """
+        super().__init__(target_size)
+        self.func = func
+    
+    def preprocess(self, X):
+        """
+        Apply the custom function to the input data.
+        
+        Args:
+            X: Input array/tensor
+            
+        Returns:
+            Processed array/tensor
+        """
+        return self.func(X)
+

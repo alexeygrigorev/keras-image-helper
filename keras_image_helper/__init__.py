@@ -1,3 +1,2 @@
 from keras_image_helper.helper import create_preprocessor
-
-__version__ = '0.0.1'
+from keras_image_helper.__version__ import __version__

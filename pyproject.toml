@@ -1,0 +1,55 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "keras-image-helper"
+dynamic = ["version"]
+description = "A lightweight library for pre-processing images for pre-trained keras models"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [
+    {name = "Alexey Grigorev", email = "alexey@datatalks.club"},
+]
+maintainers = [
+    {name = "Alexey Grigorev", email = "alexey@datatalks.club"},
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: Other/Proprietary License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = [
+    "numpy>=2.3.2",
+    "pillow>=11.3.0",
+]
+
+[dependency-groups]
+dev = [
+    "hatch>=1.14.1",
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/alexeygrigorev/keras-image-helper"
+Repository = "https://github.com/alexeygrigorev/keras-image-helper"
+Issues = "https://github.com/alexeygrigorev/keras-image-helper/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["keras_image_helper"]
+
+[tool.hatch.version]
+path = "keras_image_helper/__version__.py"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+

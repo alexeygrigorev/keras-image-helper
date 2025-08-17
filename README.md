@@ -20,10 +20,24 @@ For an xception model:
 
 ```python
 from keras_image_helper import create_preprocessor
+
 preprocessor = create_preprocessor('xception', target_size=(299, 299))
 
 url = 'http://bit.ly/mlbookcamp-pants'
 X = preprocessor.from_url(url)
+```
+
+It's also possible to provide custom functions
+instead of preprocessor name:
+
+```python
+def custom_function(x):
+    x = x / 255.0
+    x = x.round(1)
+    x.transpose(0, 3, 1, 2)
+    return x
+
+preprocessor = create_preprocessor(custom_function, target_size=(3, 3))
 ```
 
 Now you can use `X` for your model:
@@ -43,6 +57,7 @@ Currently you can use the following pre-processors:
 * `vgg16`
 * `inception_v3`
 
+
 If something you need is missing, PRs are welcome
 
 
@@ -52,12 +67,6 @@ It's available on PyPI, so you can install it with pip:
 
 ```bash
 pip install keras_image_helper
-```
-
-Or with Pipenv:
-
-```bash
-pipenv install keras_image_helper
 ```
 
 You can also install the latest version from this repo:
@@ -70,34 +79,52 @@ python setup.py install
 
 ## Publishing
 
-Use twine for that:
-
+1. Install development dependencies:
 ```bash
-pip install twine
+uv sync --dev
 ```
 
-Generate a wheel:
-
-```python
-python setup.py sdist bdist_wheel
+2. Build the package:
+```bash
+uv run hatch build
 ```
 
-Check the packages:
-
+3. Publish to test PyPI:
 ```bash
-twine check dist/*
+uv run hatch publish --repo test
 ```
 
-Upload the library to test PyPI to verify everything is working:
-
+4. Publish to PyPI:
 ```bash
-twine upload --repository-url https://test.pypi.org/legacy/ dist/*
+uv run hatch publish
 ```
 
-Upload to PyPI:
-
+5. Clean up:
 ```bash
-twine upload dist/*
+rm -r dist/
+```
+
+Note: For Hatch publishing, you'll need to configure your PyPI credentials in `~/.pypirc` or use environment variables.
+
+## PyPI Credentials Setup
+
+Create a `.pypirc` file in your home directory with your PyPI credentials:
+
+```ini
+[distutils]
+index-servers =
+    pypi
+    testpypi
+
+[pypi]
+repository = https://upload.pypi.org/legacy/
+username = __token__
+password = pypi-your-main-api-token-here
+
+[testpypi]
+repository = https://test.pypi.org/legacy/
+username = __token__
+password = pypi-your-test-api-token-here
 ```
 
 Done!
